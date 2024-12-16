@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from gtts import gTTS
 import os
 from translations import translate_genz_word, suggest_closest_word
@@ -16,22 +16,22 @@ AUDIO_FILE_PATH = 'static/translation.mp3'
 @app.route('/')
 def index():
     # Check if the user is logged in (via session)
-    if 'logged_in' in session and session['logged_in']:
+    if session.get('logged_in'):
         return render_template('index.html')  # Show index.html from the 'SYSTEM' folder if logged in
     else:
-        return render_template('loginandsignup.html')  # Show loginandsignup.html from the 'SYSTEM' folder if not logged in
+        return render_template('loginandsignup.html')  # Show loginandsignup.html if not logged in
 
 @app.route('/login', methods=['POST'])
 def login():
     try:
         # Retrieve login credentials from the form
-        email = request.form['email']
-        password = request.form['password']
+        email = request.form.get('email')
+        password = request.form.get('password')
 
         # Dummy check for login credentials (use real validation in production)
         if email == "test@example.com" and password == "password123":
             session['logged_in'] = True  # Set the session flag for logged-in user
-            return redirect(url_for('index'))  # Redirect to the main page (index.html)
+            return redirect(url_for('index'))
 
         # If login fails, show error
         return render_template('loginandsignup.html', error="Invalid credentials")
@@ -43,9 +43,9 @@ def login():
 def signup():
     try:
         # Retrieve signup information
-        email = request.form['email']
-        password = request.form['password']
-        confirm_password = request.form['confirm_password']
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
 
         # Simple check if passwords match
         if password != confirm_password:
