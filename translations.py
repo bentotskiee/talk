@@ -1,6 +1,5 @@
 from fuzzywuzzy import process
 
-# Expanded dictionary for Gen Z words translation in both English and Tagalog
 GEN_Z_TRANSLATIONS = {
     "salty": {"en": "annoyed or upset", "tl": "naiinis o nagagalit"},
     "lit": {"en": "amazing or exciting", "tl": "kamangha-mangha o kapana-panabik"},
@@ -83,13 +82,9 @@ GEN_Z_TRANSLATIONS = {
     "dasurv": {"en": "deserved", "tl": "nararapat"},
 }
 
-
 def translate_genz_word(word, lang="en"):
     """
-    Translates a Gen Z word into either English or Tagalog.
-    :param word: The Gen Z word to translate.
-    :param lang: The language for the translation (either 'en' or 'tl').
-    :return: The translated word or an error message if not found.
+    Translates a Gen Z word into English or Tagalog.
     """
     translation = GEN_Z_TRANSLATIONS.get(word.lower())
     if translation:
@@ -99,8 +94,6 @@ def translate_genz_word(word, lang="en"):
 def suggest_closest_word(word):
     """
     Suggests the closest matching Gen Z word using FuzzyWuzzy.
-    :param word: The input word.
-    :return: The closest matching word or an empty string if none is found.
     """
     gen_z_words = list(GEN_Z_TRANSLATIONS.keys())
     closest_match, score = process.extractOne(word.lower(), gen_z_words)
