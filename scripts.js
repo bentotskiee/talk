@@ -66,12 +66,12 @@ async function translateWord() {
                 audioBtn.setAttribute('data-audio-url', data.audio_url);
             }
         } else {
-            output.textContent = "Translation not found.";
+            output.textContent = data.error || "Translation not found.";
             output.style.display = "block";
         }
     } catch (error) {
         spinner.style.display = "none";
-        output.textContent = "An error occurred. Please try again.";
+        output.textContent = `An error occurred: ${error.message}`;
         output.style.display = "block";
     }
 }
