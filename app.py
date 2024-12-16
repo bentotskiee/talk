@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, session
+from flask import Flask, render_template, request, jsonify, session
 from gtts import gTTS
 import os
 from translations import translate_genz_word, suggest_closest_word
@@ -19,7 +19,7 @@ def index():
     if 'logged_in' in session and session['logged_in']:
         return render_template('index.html')  # Show index.html from the 'SYSTEM' folder if logged in
     else:
-        return render_template('loginandsignup.html')  # Show loginandsingup.html from the 'SYSTEM' folder if not logged in
+        return render_template('loginandsignup.html')  # Show loginandsignup.html from the 'SYSTEM' folder if not logged in
 
 @app.route('/login', methods=['POST'])
 def login():
